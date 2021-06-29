@@ -20,7 +20,7 @@ def prime(jarvis, s):
         if n < 0:
             jarvis.say("That's not a natural number")
         else:
-            if n % 2 == 0:
+            if (n % 2 == 0 and n != 2) or n == 1:
                 jarvis.say("That's not a prime number")
                 return
             for i in range(3, int(sqrt(n)) + 1, 2):
