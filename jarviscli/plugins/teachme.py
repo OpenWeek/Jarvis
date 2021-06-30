@@ -58,7 +58,6 @@ def word_analyzer(corpus,number,filename,title, app_id,app_key, lang,loc='',savi
             return True
     def preprocessing(corpus_words,sp):
         sp2 = spacy.load('en_core_web_sm')
-        #lemma_words={}
         def is_not_punctuation(letter):
             try:
                 return category(letter).startswith('P')
@@ -73,12 +72,10 @@ def word_analyzer(corpus,number,filename,title, app_id,app_key, lang,loc='',savi
             for line in f:
                 w=line.split()
                 w=w[0]
-                #Forbidden_List.append(get_lemma(w.lower()))
                 Forbidden_List[w.lower()]=False
         from nltk.corpus import stopwords
         from string import punctuation
         from unicodedata import category
-        #Forbidden_List=Forbidden_List+stopwords.words('english')
         for w in stopwords.words('english')+list(punctuation):
             if w not in Forbidden_List:
                 Forbidden_List[w]=False
@@ -162,26 +159,20 @@ def word_analyzer(corpus,number,filename,title, app_id,app_key, lang,loc='',savi
             ant='No antononym is found for "' + word.capitalize()+ '".'
         return synon,ant,synonyms
     def get_def_oxford (word,app_id,app_key):
-        # TODO: replace with your own app_id and app_key8app_id = '<my app_id>'
         language = 'en'
         word_id = word
-        #stem=PorterStemmer()
-        #new_word=stem.stem(word_id)
-        #word_id=new_word
+
         url = 'https://od-api.oxforddictionaries.com:443/api/v2/entries/' + language + '/'  + word_id.lower()
         #url Normalized frequency
         urlFR = 'https://od-api.oxforddictionaries.com:443/api/v2/stats/frequency/word/'  + language + '/?corpus=nmc&lemma=' + word_id.lower()
         r = requests.get(url, headers = {'app_id' : app_id, 'app_key' : app_key})
-        #print("code {}\n".format(r.status_code))
+
         return r, r.status_code
 
 
     words,corpus_words_dic,dist,norm=preprocessing(corpus,sp)
 
-    #plt.figure(figsize=(15,8))
     f=FreqDist(words)
-    n=np.round(len(np.unique(words))*0.20)
-    #f.plot(int(n))
     WordList=f.most_common()
     idd=0
     jarvis.say('Preprocessing Phase terminated')
@@ -270,10 +261,6 @@ def word_analyzer(corpus,number,filename,title, app_id,app_key, lang,loc='',savi
                             if saving:
                                 f.write('\t\t'+str(idddd)+'. '+sens['definitions'][0].capitalize()+'.\n')
                             jarvis.say('\t\t'+str(idddd)+'. '+sens['definitions'][0].capitalize()+'.\n')    
-                            #if len(sens['examples'])>1:
-                                #jarvis.say('   Examples:')
-                            #else:
-                                #jarvis.say('   Example:')
 
                             if 'examples' in sens:
                                 if saving:
@@ -283,10 +270,8 @@ def word_analyzer(corpus,number,filename,title, app_id,app_key, lang,loc='',savi
                                 jarvis.say('\t\t   '+ sens['examples'][0]['text'].capitalize()+'.\n')
                                 if len(sens['examples'])>1:
                                     for examples in sens['examples']:
-                                        #jarvis.say(sens['examples'][0][1:])
                                         TestExample.append([examples['text'].capitalize(),sens['shortDefinitions'][0].capitalize()+'.'])
                                 else:
-                                        #if len(senses)==1:
                                         TestExample.append([sens['examples'][0]['text'].capitalize(),sens['shortDefinitions'][0].capitalize()+'.'])
                             else:
                                 continue
