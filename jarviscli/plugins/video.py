@@ -4,8 +4,8 @@ from plugin import plugin
 playerList = ["Youtube", "youtube", "dailymotion", "Dailymotion"]
 
 
-@plugin("music")
-def music(jarvis, s):
+@plugin("video")
+def video(jarvis, s):
     """
     Allow to launch search in YouTube or Dailymotion
     """
