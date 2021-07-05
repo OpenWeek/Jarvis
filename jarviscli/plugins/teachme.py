@@ -4,12 +4,10 @@ from nltk.stem import WordNetLemmatizer
 from collections import Counter
 import nltk
 import numpy as np
-import matplotlib.pyplot as plt
 from nltk.corpus import stopwords
 from nltk import FreqDist
 import os
 import requests
-import json
 import spacy
 import random
 import requests
